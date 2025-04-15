@@ -1,10 +1,11 @@
 
 import { useTheme } from "@/context/ThemeContext";
 import { Menu } from "lucide-react";
+import { useSidebar } from "@/components/ui/sidebar-new";
 
-// Create a headerToggle function that doesn't depend on the Sidebar context
 export function Header() {
   const { theme, setTheme } = useTheme();
+  const { open, setOpen } = useSidebar();
 
   return (
     <header className="px-6 py-3 border-b border-border bg-background">
@@ -12,6 +13,7 @@ export function Header() {
         <div className="flex items-center gap-2">
           <button 
             className="md:hidden text-muted-foreground"
+            onClick={() => setOpen(!open)}
           >
             <Menu className="h-5 w-5" />
           </button>
