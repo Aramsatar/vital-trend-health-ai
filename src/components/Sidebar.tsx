@@ -1,125 +1,94 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "@/components/ThemeToggle";
-import { 
-  Activity, 
-  Calendar, 
-  ChevronLeft, 
-  ChevronRight, 
-  Home, 
-  LineChart, 
-  MessageSquare, 
-  Settings, 
-  User 
-} from "lucide-react";
+import { useTheme } from "@/context/ThemeContext";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { cn } from "@/lib/utils";
+import { Icons } from "@/components/ui/icons";
+import { signOut } from "@/lib/auth";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
-interface SidebarProps {
-  className?: string;
-}
+const navigation = [
+  { name: 'Dashboard', href: '/', icon: Icons.home },
+  { name: 'Metrics', href: '/metrics', icon: Icons.barChart },
+  { name: 'Trends', href: '/trends', icon: Icons.trendingUp },
+  { name: 'Calendar', href: '/calendar', icon: Icons.calendar },
+  { name: 'Chat', href: '/chat', icon: Icons.messageSquare },
+  { name: 'Profile', href: '/profile', icon: Icons.user },
+  { name: 'Settings', href: '/settings', icon: Icons.settings },
+];
 
-export function Sidebar({ className }: SidebarProps) {
-  const [collapsed, setCollapsed] = useState(false);
+export function Sidebar({ className }: { className?: string }) {
+  const { theme, setTheme } = useTheme();
   const isMobile = useIsMobile();
+  const [open, setOpen] = useState(true);
+  const navigate = useNavigate();
 
-  // If on mobile and not explicitly opened, keep it collapsed
-  const isCollapsed = isMobile || collapsed;
-
-  const toggleSidebar = () => {
-    setCollapsed(!collapsed);
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
   };
 
-  const navItems = [
-    { name: "Dashboard", path: "/", icon: Home },
-    { name: "Metrics", path: "/metrics", icon: Activity },
-    { name: "Trends", path: "/trends", icon: LineChart },
-    { name: "Calendar", path: "/calendar", icon: Calendar },
-    { name: "AI Chat", path: "/chat", icon: MessageSquare }
-  ];
-
-  const accountItems = [
-    { name: "Profile", path: "/profile", icon: User },
-    { name: "Settings", path: "/settings", icon: Settings }
-  ];
+  const handleSignOut = async () => {
+    const { error } = await signOut();
+    if (error) {
+      toast.error("Failed to sign out.");
+    } else {
+      toast.success("Signed out successfully!");
+      navigate('/auth');
+    }
+  };
 
   return (
-    <aside
-      className={cn(
-        "bg-sidebar border-r border-border relative transition-all flex flex-col",
-        isCollapsed ? "w-[70px]" : "w-[240px]",
-        className
-      )}
-    >
-      <div className="flex items-center justify-between px-4 h-16 border-b border-border">
-        <div className={cn("flex items-center", isCollapsed && "justify-center w-full")}>
-          {!isCollapsed && (
-            <span className="text-xl font-bold text-primary">
-              HealthMetrics
-            </span>
-          )}
-          {isCollapsed && (
-            <span className="text-xl font-bold text-primary">HM</span>
+    <aside className={cn(
+      "w-64 border-r border-r-border bg-sidebar shadow-md transition-transform duration-300",
+      className
+    )}>
+      <div className="flex flex-col h-full">
+        <div className="flex items-center justify-between py-4 px-6">
+          <span className="font-bold text-lg">HealthMetrics AI</span>
+          {isMobile && (
+            <button onClick={() => setOpen(!open)}>
+              {open ? 'Close' : 'Open'}
+            </button>
           )}
         </div>
-        {!isMobile && (
-          <Button
-            variant="ghost"
-            size="icon"
-            className="ml-auto"
-            onClick={toggleSidebar}
-            aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-          >
-            {isCollapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
-          </Button>
-        )}
-      </div>
 
-      <div className="flex flex-col flex-1 py-4 overflow-y-auto">
-        <nav className="space-y-1 px-2">
-          {navItems.map((item) => (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              className={({ isActive }) => 
-                cn(
-                  "flex items-center px-3 py-2 rounded-md transition-colors",
-                  isActive 
-                    ? "bg-primary/10 text-primary font-medium" 
-                    : "text-sidebar-foreground hover:bg-sidebar-accent",
-                  isCollapsed && "justify-center"
-                )
-              }
-            >
-              <item.icon size={20} className={!isCollapsed ? "mr-3" : ""} />
-              {!isCollapsed && <span>{item.name}</span>}
-            </NavLink>
-          ))}
+        <nav className="flex-1 py-4">
+          <ul>
+            {navigation.map((item) => (
+              <li key={item.name}>
+                <NavLink
+                  to={item.href}
+                  className={({ isActive }) =>
+                    cn(
+                      "flex items-center gap-2 py-2 px-6 hover:bg-accent hover:text-accent-foreground transition-colors",
+                      isActive ? "bg-accent text-accent-foreground font-medium" : "text-muted-foreground"
+                    )
+                  }
+                >
+                  {item.icon && <item.icon className="w-4 h-4" />}
+                  {item.name}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
         </nav>
 
-        <div className="mt-auto space-y-1 px-2">
-          {accountItems.map((item) => (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              className={({ isActive }) => 
-                cn(
-                  "flex items-center px-3 py-2 rounded-md transition-colors",
-                  isActive 
-                    ? "bg-primary/10 text-primary font-medium" 
-                    : "text-sidebar-foreground hover:bg-sidebar-accent",
-                  isCollapsed && "justify-center"
-                )
-              }
-            >
-              <item.icon size={20} className={!isCollapsed ? "mr-3" : ""} />
-              {!isCollapsed && <span>{item.name}</span>}
-            </NavLink>
-          ))}
-          <div className={cn("mt-4 px-3", isCollapsed && "flex justify-center")}>
-            <ThemeToggle />
-          </div>
+        <div className="border-t border-t-border py-4 px-6">
+          <button
+            onClick={toggleTheme}
+            className="w-full flex items-center gap-2 py-2 px-4 hover:bg-accent hover:text-accent-foreground transition-colors text-muted-foreground"
+          >
+            {theme === "light" ? <Icons.moon className="w-4 h-4" /> : <Icons.sun className="w-4 h-4" />}
+            Toggle Theme
+          </button>
+          <button
+            onClick={handleSignOut}
+            className="w-full flex items-center gap-2 py-2 px-4 hover:bg-accent hover:text-accent-foreground transition-colors text-muted-foreground"
+          >
+            <Icons.logOut className="w-4 h-4" />
+            Sign Out
+          </button>
         </div>
       </div>
     </aside>
