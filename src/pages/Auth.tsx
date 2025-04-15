@@ -8,32 +8,75 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { Form, FormField, FormItem, FormLabel, FormControl } from "@/components/ui/form";
+import { useForm } from "react-hook-form";
+
+interface SignUpFormValues {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}
+
+interface SignInFormValues {
+  email: string;
+  password: string;
+}
 
 export function Auth() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const navigate = useNavigate();
 
-  const handleAuth = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const signUpForm = useForm<SignUpFormValues>({
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: ""
+    }
+  });
+
+  const signInForm = useForm<SignInFormValues>({
+    defaultValues: {
+      email: "",
+      password: ""
+    }
+  });
+
+  const handleSignUp = async (values: SignUpFormValues) => {
     setIsLoading(true);
     
     try {
-      if (mode === "signin") {
-        const { data, error } = await signIn(email, password);
-        if (error) throw error;
-        
-        toast.success("Signed in successfully!");
-        navigate("/welcome");
-      } else {
-        const { data, error } = await signUp(email, password);
-        if (error) throw error;
-        
-        toast.success("Account created! Please check your email for verification.");
-        setMode("signin");
-      }
+      const { data, error } = await signUp(
+        values.email, 
+        values.password,
+        {
+          firstName: values.firstName,
+          lastName: values.lastName
+        }
+      );
+      
+      if (error) throw error;
+      
+      toast.success("Account created! Please check your email for verification.");
+      setMode("signin");
+    } catch (error: any) {
+      toast.error(error.message || "Failed to create account");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSignIn = async (values: SignInFormValues) => {
+    setIsLoading(true);
+    
+    try {
+      const { data, error } = await signIn(values.email, values.password);
+      if (error) throw error;
+      
+      toast.success("Signed in successfully!");
+      navigate('/');
     } catch (error: any) {
       toast.error(error.message || "Authentication failed");
     } finally {
@@ -64,48 +107,106 @@ export function Auth() {
                 : "Sign up for a new account to get started"}
             </CardDescription>
           </CardHeader>
-          <form onSubmit={handleAuth}>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input 
-                  id="email" 
-                  type="email" 
-                  placeholder="your@email.com" 
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
-                <Input 
-                  id="password" 
-                  type="password" 
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </div>
-            </CardContent>
-            <CardFooter className="flex flex-col space-y-4">
-              <Button 
-                type="submit" 
-                className="w-full" 
-                disabled={isLoading}
-              >
-                {isLoading ? "Loading..." : mode === "signin" ? "Sign In" : "Sign Up"}
-              </Button>
-              <Button 
-                type="button" 
-                variant="outline" 
-                className="w-full"
-                onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
-              >
-                {mode === "signin" ? "Create an account" : "Already have an account?"}
-              </Button>
-            </CardFooter>
-          </form>
+          
+          {mode === "signup" ? (
+            <form onSubmit={signUpForm.handleSubmit(handleSignUp)}>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="firstName">First Name</Label>
+                    <Input 
+                      id="firstName" 
+                      {...signUpForm.register("firstName")}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="lastName">Last Name</Label>
+                    <Input 
+                      id="lastName" 
+                      {...signUpForm.register("lastName")}
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="signup-email">Email</Label>
+                  <Input 
+                    id="signup-email" 
+                    type="email"
+                    {...signUpForm.register("email")}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="signup-password">Password</Label>
+                  <Input 
+                    id="signup-password" 
+                    type="password"
+                    {...signUpForm.register("password")}
+                    required
+                  />
+                </div>
+              </CardContent>
+              <CardFooter className="flex flex-col space-y-4">
+                <Button 
+                  type="submit" 
+                  className="w-full" 
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Creating Account..." : "Sign Up"}
+                </Button>
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  className="w-full"
+                  onClick={() => setMode("signin")}
+                >
+                  Already have an account?
+                </Button>
+              </CardFooter>
+            </form>
+          ) : (
+            <form onSubmit={signInForm.handleSubmit(handleSignIn)}>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="signin-email">Email</Label>
+                  <Input 
+                    id="signin-email" 
+                    type="email"
+                    {...signInForm.register("email")}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="signin-password">Password</Label>
+                  <Input 
+                    id="signin-password" 
+                    type="password"
+                    {...signInForm.register("password")}
+                    required
+                  />
+                </div>
+              </CardContent>
+              <CardFooter className="flex flex-col space-y-4">
+                <Button 
+                  type="submit" 
+                  className="w-full" 
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Signing In..." : "Sign In"}
+                </Button>
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  className="w-full"
+                  onClick={() => setMode("signup")}
+                >
+                  Create an account
+                </Button>
+              </CardFooter>
+            </form>
+          )}
         </Card>
       </div>
     </div>

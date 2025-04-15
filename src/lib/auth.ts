@@ -3,6 +3,11 @@ import { supabase } from "@/integrations/supabase/client";
 import { User } from "@supabase/supabase-js";
 import { useState, useEffect } from "react";
 
+interface UserMetadata {
+  firstName?: string;
+  lastName?: string;
+}
+
 export async function signIn(email: string, password: string) {
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
@@ -12,10 +17,13 @@ export async function signIn(email: string, password: string) {
   return { data, error };
 }
 
-export async function signUp(email: string, password: string) {
+export async function signUp(email: string, password: string, metadata?: UserMetadata) {
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
+    options: {
+      data: metadata
+    }
   });
   
   return { data, error };
