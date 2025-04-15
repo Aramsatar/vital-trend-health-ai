@@ -1,5 +1,4 @@
 
-import { Grid } from "lucide-react";
 import { PageHeader } from "@/components/PageHeader";
 import { MetricCard } from "@/components/MetricCard";
 import { MetricChart } from "@/components/MetricChart";
@@ -45,7 +44,9 @@ export function Dashboard() {
           metricType="heartRate" 
           className="md:col-span-2 lg:col-span-1"
         />
-        <RecentReadings className="md:col-span-2 lg:col-span-1" />
+        <div className="md:col-span-2 lg:col-span-1">
+          <RecentReadings />
+        </div>
       </div>
     </div>
   );

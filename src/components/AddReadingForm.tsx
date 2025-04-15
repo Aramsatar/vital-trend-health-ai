@@ -19,19 +19,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "@/components/ui/sonner";
 import { PlusCircle } from "lucide-react";
 
 export function AddReadingForm() {
   const [open, setOpen] = useState(false);
   const [metricType, setMetricType] = useState("bloodPressure");
-  const { toast } = useToast();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    toast({
-      title: "Reading added",
+    toast("Reading added", {
       description: "Your health metric has been recorded successfully.",
     });
     
