@@ -17,6 +17,7 @@ import { Profile } from "@/pages/Profile";
 import { Settings } from "@/pages/Settings";
 import { Welcome } from "@/pages/Welcome";
 import { Auth } from "@/pages/Auth";
+import { Landing } from "@/pages/Landing";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -70,6 +71,9 @@ const App = () => {
           <Toaster />
           <BrowserRouter>
             <Routes>
+              {/* Public landing page */}
+              <Route path="/landing" element={<Landing />} />
+              
               <Route path="/auth" element={
                 <AuthRoute>
                   <Auth />
@@ -100,3 +104,4 @@ const App = () => {
 };
 
 export default App;
+
