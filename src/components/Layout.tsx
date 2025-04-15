@@ -9,7 +9,8 @@ import {
   SidebarBody, 
   SidebarLink, 
   Logo, 
-  LogoIcon 
+  LogoIcon,
+  SidebarProvider
 } from "@/components/ui/sidebar-new";
 import { signOut } from "@/lib/auth";
 import { useNavigate } from "react-router-dom";
@@ -43,65 +44,67 @@ export function Layout() {
   };
   
   return (
-    <div className="min-h-screen flex bg-background">
-      <Sidebar open={sidebarOpen} setOpen={setSidebarOpen}>
-        <SidebarBody className="justify-between gap-10">
-          <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-            {sidebarOpen ? <Logo /> : <LogoIcon />}
-            <div className="mt-8 flex flex-col gap-2">
-              {navigation.map((item) => (
-                <SidebarLink key={item.name} link={item} />
-              ))}
+    <SidebarProvider open={sidebarOpen} setOpen={setSidebarOpen}>
+      <div className="min-h-screen flex bg-background">
+        <Sidebar open={sidebarOpen} setOpen={setSidebarOpen}>
+          <SidebarBody className="justify-between gap-10">
+            <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+              {sidebarOpen ? <Logo /> : <LogoIcon />}
+              <div className="mt-8 flex flex-col gap-2">
+                {navigation.map((item) => (
+                  <SidebarLink key={item.name} link={item} />
+                ))}
+              </div>
             </div>
-          </div>
-          <div className="space-y-2">
-            {/* Theme toggle */}
-            <button
-              onClick={() => document.documentElement.classList.toggle('dark')}
-              className="flex items-center gap-2 group/sidebar py-2 w-full"
-            >
-              <Icons.sun className="w-5 h-5 flex-shrink-0 dark:hidden" />
-              <Icons.moon className="w-5 h-5 flex-shrink-0 hidden dark:block" />
-              <span className={cn(
-                "text-sm whitespace-pre transition duration-150",
-                !sidebarOpen && "hidden"
-              )}>
-                Toggle Theme
-              </span>
-            </button>
-            
-            {/* Sign out button */}
-            <button
-              onClick={handleSignOut}
-              className="flex items-center gap-2 group/sidebar py-2 w-full text-red-500 hover:text-red-600"
-            >
-              <Icons.logOut className="w-5 h-5 flex-shrink-0" />
-              <span className={cn(
-                "text-sm whitespace-pre transition duration-150",
-                !sidebarOpen && "hidden"
-              )}>
-                Sign Out
-              </span>
-            </button>
-          </div>
-        </SidebarBody>
-      </Sidebar>
+            <div className="space-y-2">
+              {/* Theme toggle */}
+              <button
+                onClick={() => document.documentElement.classList.toggle('dark')}
+                className="flex items-center gap-2 group/sidebar py-2 w-full"
+              >
+                <Icons.sun className="w-5 h-5 flex-shrink-0 dark:hidden" />
+                <Icons.moon className="w-5 h-5 flex-shrink-0 hidden dark:block" />
+                <span className={cn(
+                  "text-sm whitespace-pre transition duration-150",
+                  !sidebarOpen && "hidden"
+                )}>
+                  Toggle Theme
+                </span>
+              </button>
+              
+              {/* Sign out button */}
+              <button
+                onClick={handleSignOut}
+                className="flex items-center gap-2 group/sidebar py-2 w-full text-red-500 hover:text-red-600"
+              >
+                <Icons.logOut className="w-5 h-5 flex-shrink-0" />
+                <span className={cn(
+                  "text-sm whitespace-pre transition duration-150",
+                  !sidebarOpen && "hidden"
+                )}>
+                  Sign Out
+                </span>
+              </button>
+            </div>
+          </SidebarBody>
+        </Sidebar>
 
-      <div className="flex-1 flex flex-col min-h-screen">
-        <Header />
-        
-        <main className="flex-1 p-4 md:p-6">
-          <div className="mx-auto max-w-7xl">
-            <Outlet />
-          </div>
-        </main>
-        
-        <footer className="py-4 px-6 border-t border-border">
-          <div className="text-center text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} HealthMetrics AI. All rights reserved.
-          </div>
-        </footer>
+        <div className="flex-1 flex flex-col min-h-screen">
+          <Header />
+          
+          <main className="flex-1 p-4 md:p-6">
+            <div className="mx-auto max-w-7xl">
+              <Outlet />
+            </div>
+          </main>
+          
+          <footer className="py-4 px-6 border-t border-border">
+            <div className="text-center text-sm text-muted-foreground">
+              &copy; {new Date().getFullYear()} HealthMetrics AI. All rights reserved.
+            </div>
+          </footer>
+        </div>
       </div>
-    </div>
+    </SidebarProvider>
   );
 }
