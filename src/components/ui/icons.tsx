@@ -1,7 +1,30 @@
 
-import { ArrowRight, Github } from "lucide-react"
+import { 
+  ArrowRight, 
+  Github, 
+  Home, 
+  BarChart, 
+  TrendingUp, 
+  Calendar, 
+  MessageSquare, 
+  User, 
+  Settings, 
+  Moon, 
+  Sun, 
+  LogOut 
+} from "lucide-react"
 
 export const Icons = {
   arrowRight: ArrowRight,
-  gitHub: Github
+  gitHub: Github,
+  home: Home,
+  barChart: BarChart,
+  trendingUp: TrendingUp,
+  calendar: Calendar,
+  messageSquare: MessageSquare,
+  user: User,
+  settings: Settings,
+  moon: Moon,
+  sun: Sun,
+  logOut: LogOut
 }
