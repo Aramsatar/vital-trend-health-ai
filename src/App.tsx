@@ -1,4 +1,3 @@
-
 import { Toaster } from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -72,6 +71,7 @@ const App = () => {
           <BrowserRouter>
             <Routes>
               {/* Public landing page */}
+              <Route path="/" element={<Landing />} />
               <Route path="/landing" element={<Landing />} />
               
               <Route path="/auth" element={
@@ -85,7 +85,7 @@ const App = () => {
                   <Layout />
                 </ProtectedRoute>
               }>
-                <Route path="/" element={<Dashboard />} />
+                <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/welcome" element={<Welcome />} />
                 <Route path="/metrics" element={<Metrics />} />
                 <Route path="/trends" element={<Trends />} />

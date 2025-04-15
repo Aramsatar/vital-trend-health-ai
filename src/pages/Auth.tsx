@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signIn, signUp } from "@/lib/auth";
@@ -76,12 +75,16 @@ export function Auth() {
       if (error) throw error;
       
       toast.success("Signed in successfully!");
-      navigate('/');
+      handleSuccess();
     } catch (error: any) {
       toast.error(error.message || "Authentication failed");
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleSuccess = () => {
+    navigate('/dashboard');
   };
 
   return (
