@@ -72,20 +72,33 @@ export const Sidebar = ({
   );
 };
 
-export const SidebarBody = (props: Omit<React.ComponentProps<typeof motion.div>, "children"> & { children: React.ReactNode }) => {
+// Define interfaces for our components to avoid type mismatches
+interface SidebarBodyProps {
+  className?: string;
+  children: React.ReactNode;
+  [key: string]: any; // Allow additional props
+}
+
+export const SidebarBody = ({ children, ...props }: SidebarBodyProps) => {
   return (
     <>
-      <DesktopSidebar {...props} />
-      <MobileSidebar {...props} />
+      <DesktopSidebar {...props}>{children}</DesktopSidebar>
+      <MobileSidebar {...props}>{children}</MobileSidebar>
     </>
   );
 };
+
+interface DesktopSidebarProps {
+  className?: string;
+  children: React.ReactNode;
+  [key: string]: any; // Allow additional props
+}
 
 export const DesktopSidebar = ({
   className,
   children,
   ...props
-}: Omit<React.ComponentProps<typeof motion.div>, "children"> & { children: React.ReactNode }) => {
+}: DesktopSidebarProps) => {
   const { open, setOpen, animate } = useSidebar();
   return (
     <motion.div
@@ -105,11 +118,17 @@ export const DesktopSidebar = ({
   );
 };
 
+interface MobileSidebarProps {
+  className?: string;
+  children: React.ReactNode;
+  [key: string]: any; // Allow additional props
+}
+
 export const MobileSidebar = ({
   className,
   children,
   ...props
-}: React.ComponentPropsWithoutRef<"div">) => {
+}: MobileSidebarProps) => {
   const { open, setOpen } = useSidebar();
   return (
     <>
@@ -155,15 +174,17 @@ export const MobileSidebar = ({
   );
 };
 
+interface SidebarLinkProps {
+  link: Links;
+  className?: string;
+  [key: string]: any;
+}
+
 export const SidebarLink = ({
   link,
   className,
   ...props
-}: {
-  link: Links;
-  className?: string;
-  props?: any;
-}) => {
+}: SidebarLinkProps) => {
   const { open, animate } = useSidebar();
   return (
     <NavLink
