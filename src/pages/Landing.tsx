@@ -1,12 +1,13 @@
 
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { FeaturesSection } from "@/components/blocks/features-section";
 import { StepsSection } from "@/components/blocks/steps-section";
 import { MetricsPreview } from "@/components/blocks/metrics-preview";
 import { AIAssistantPreview } from "@/components/blocks/ai-assistant-preview";
+import { WelcomeNav } from "@/components/WelcomeNav";
+import { HeroSection } from "@/components/blocks/hero-section";
 
 export function Landing() {
   const navigate = useNavigate();
@@ -15,49 +16,56 @@ export function Landing() {
     navigate('/auth');
   };
 
-  const handleSignIn = () => {
-    navigate('/auth');
-  };
-
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen overflow-x-hidden">
+      {/* Navigation */}
+      <WelcomeNav />
+      
       {/* Hero Section */}
-      <section className="py-20 px-4 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-slate-900 dark:to-slate-800">
-        <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-cyan-500 bg-clip-text text-transparent">
-              HealthMetrics AI
-            </h1>
-            <p className="text-xl md:text-2xl text-slate-700 dark:text-slate-300 max-w-3xl mx-auto mb-8">
-              The only platform that combines advanced health metrics tracking with AI-powered insights for your wellness journey.
-            </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Button size="lg" onClick={handleGetStarted} className="text-md">
-                Get Started <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-              <Button size="lg" variant="outline" onClick={() => navigate('/welcome')} className="text-md">
-                View Demo
-              </Button>
-            </div>
-          </div>
-          <div className="mt-12 rounded-xl overflow-hidden shadow-2xl bg-white dark:bg-slate-800">
-            <img 
-              src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3" 
-              alt="Health metrics dashboard preview"
-              className="w-full h-auto object-cover"
-            />
-          </div>
-        </div>
-      </section>
+      <HeroSection
+        badge={{
+          text: "New AI Features",
+          action: {
+            text: "Learn more",
+            href: "#features"
+          }
+        }}
+        title="Take control of your health with AI-powered insights"
+        description="Track your vital health metrics and get personalized recommendations from our advanced AI assistant, all in one beautifully designed platform."
+        actions={[
+          {
+            text: "Get Started",
+            href: "/auth?mode=signup",
+            variant: "glow",
+            icon: <ArrowRight className="h-4 w-4" />
+          },
+          {
+            text: "View Demo",
+            href: "/welcome",
+            variant: "default"
+          }
+        ]}
+        image={{
+          light: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3",
+          dark: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3",
+          alt: "Health metrics dashboard preview"
+        }}
+      />
 
-      {/* Features Section */}
-      <FeaturesSection />
+      {/* Features Section with anchor for navigation */}
+      <div id="features">
+        <FeaturesSection />
+      </div>
 
-      {/* How It Works Section */}
-      <StepsSection />
+      {/* How It Works Section with anchor for navigation */}
+      <div id="how-it-works">
+        <StepsSection />
+      </div>
 
-      {/* Metrics Preview Section */}
-      <MetricsPreview />
+      {/* Metrics Preview Section with anchor for navigation */}
+      <div id="metrics-preview">
+        <MetricsPreview />
+      </div>
 
       {/* AI Assistant Preview Section */}
       <AIAssistantPreview />
@@ -73,7 +81,7 @@ export function Landing() {
             <Button size="lg" onClick={handleGetStarted} variant="secondary" className="text-primary font-semibold">
               Get Started For Free
             </Button>
-            <Button size="lg" variant="outline" className="text-white border-white hover:bg-white/20" onClick={handleSignIn}>
+            <Button size="lg" variant="outline" className="text-white border-white hover:bg-white/20" onClick={() => navigate('/auth')}>
               Sign In
             </Button>
           </div>

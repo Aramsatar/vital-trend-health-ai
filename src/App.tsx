@@ -1,3 +1,4 @@
+
 import { Toaster } from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -45,7 +46,7 @@ function AuthRoute({ children }: { children: React.ReactNode }) {
   }
   
   if (user) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/dashboard" replace />;
   }
   
   return <>{children}</>;
@@ -80,6 +81,7 @@ const App = () => {
                 </AuthRoute>
               } />
               
+              {/* Protected routes */}
               <Route element={
                 <ProtectedRoute>
                   <Layout />
