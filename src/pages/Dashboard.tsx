@@ -51,7 +51,10 @@ export function Dashboard() {
           className="rounded-xl border bg-card p-6 shadow-sm transition-all duration-200 hover:shadow-md md:col-span-2 lg:col-span-1"
         />
         <div className="md:col-span-2 lg:col-span-1">
-          <RecentReadings className="rounded-xl border bg-card h-full p-6 shadow-sm transition-all duration-200 hover:shadow-md" />
+          {/* Fix: Wrap the RecentReadings component with a div that has the className instead */}
+          <div className="rounded-xl border bg-card h-full p-6 shadow-sm transition-all duration-200 hover:shadow-md">
+            <RecentReadings />
+          </div>
         </div>
       </div>
     </div>
