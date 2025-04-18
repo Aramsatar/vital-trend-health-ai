@@ -19,7 +19,7 @@ import { Icons } from "@/components/ui/icons";
 
 // Navigation items for the sidebar
 const navigation = [
-  { name: 'Dashboard', href: '/', icon: <Icons.home className="w-5 h-5 flex-shrink-0" /> },
+  { name: 'Dashboard', href: '/dashboard', icon: <Icons.home className="w-5 h-5 flex-shrink-0" /> },
   { name: 'Metrics', href: '/metrics', icon: <Icons.barChart className="w-5 h-5 flex-shrink-0" /> },
   { name: 'Trends', href: '/trends', icon: <Icons.trendingUp className="w-5 h-5 flex-shrink-0" /> },
   { name: 'Calendar', href: '/calendar', icon: <Icons.calendar className="w-5 h-5 flex-shrink-0" /> },
@@ -47,39 +47,45 @@ export function Layout() {
     <SidebarProvider open={sidebarOpen} setOpen={setSidebarOpen}>
       <div className="min-h-screen flex bg-background">
         <Sidebar open={sidebarOpen} setOpen={setSidebarOpen}>
-          <SidebarBody className="justify-between gap-10">
+          <SidebarBody className="flex flex-col justify-between h-full p-4 gap-6">
             <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-              {sidebarOpen ? <Logo /> : <LogoIcon />}
-              <div className="mt-8 flex flex-col gap-2">
-                {navigation.map((item) => (
-                  <SidebarLink key={item.name} link={item} />
-                ))}
+              <div className="flex items-center justify-between mb-6">
+                {sidebarOpen ? <Logo /> : <LogoIcon />}
               </div>
+              
+              <nav className="space-y-1.5">
+                {navigation.map((item) => (
+                  <SidebarLink 
+                    key={item.name} 
+                    link={item}
+                    className="transition-colors duration-200 hover:bg-accent/50 rounded-lg"
+                  />
+                ))}
+              </nav>
             </div>
-            <div className="space-y-2">
-              {/* Theme toggle */}
+            
+            <div className="space-y-1.5">
               <button
                 onClick={() => document.documentElement.classList.toggle('dark')}
-                className="flex items-center gap-2 group/sidebar py-2 w-full"
+                className="flex items-center gap-3 w-full p-2.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-colors duration-200"
               >
                 <Icons.sun className="w-5 h-5 flex-shrink-0 dark:hidden" />
                 <Icons.moon className="w-5 h-5 flex-shrink-0 hidden dark:block" />
                 <span className={cn(
-                  "text-sm whitespace-pre transition duration-150",
+                  "text-sm font-medium",
                   !sidebarOpen && "hidden"
                 )}>
                   Toggle Theme
                 </span>
               </button>
               
-              {/* Sign out button */}
               <button
                 onClick={handleSignOut}
-                className="flex items-center gap-2 group/sidebar py-2 w-full text-red-500 hover:text-red-600"
+                className="flex items-center gap-3 w-full p-2.5 rounded-lg text-red-500 hover:text-red-600 hover:bg-red-500/10 transition-colors duration-200"
               >
                 <Icons.logOut className="w-5 h-5 flex-shrink-0" />
                 <span className={cn(
-                  "text-sm whitespace-pre transition duration-150",
+                  "text-sm font-medium",
                   !sidebarOpen && "hidden"
                 )}>
                   Sign Out
@@ -89,11 +95,11 @@ export function Layout() {
           </SidebarBody>
         </Sidebar>
 
-        <div className="flex-1 flex flex-col min-h-screen">
+        <div className="flex-1 flex flex-col min-h-screen overflow-hidden">
           <Header />
           
-          <main className="flex-1 p-4 md:p-6">
-            <div className="mx-auto max-w-7xl">
+          <main className="flex-1 overflow-y-auto">
+            <div className="container mx-auto max-w-7xl h-full">
               <Outlet />
             </div>
           </main>

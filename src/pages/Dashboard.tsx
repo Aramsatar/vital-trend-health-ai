@@ -7,10 +7,11 @@ import { AddReadingForm } from "@/components/AddReadingForm";
 
 export function Dashboard() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 p-1 md:p-4 animate-fade-in">
       <PageHeader 
         title="Dashboard" 
         description="Overview of your health metrics"
+        className="mb-8"
       >
         <AddReadingForm />
       </PageHeader>
@@ -18,34 +19,39 @@ export function Dashboard() {
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         <MetricCard 
           title="Blood Pressure" 
-          metricType="bloodPressure" 
+          metricType="bloodPressure"
+          className="transition-all duration-200 hover:scale-[1.02]" 
         />
         <MetricCard 
           title="Glucose" 
-          metricType="glucose" 
+          metricType="glucose"
+          className="transition-all duration-200 hover:scale-[1.02]" 
         />
         <MetricCard 
           title="Heart Rate" 
-          metricType="heartRate" 
+          metricType="heartRate"
+          className="transition-all duration-200 hover:scale-[1.02]" 
         />
       </div>
       
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
         <MetricChart 
           title="Blood Pressure" 
-          metricType="bloodPressure" 
+          metricType="bloodPressure"
+          className="rounded-xl border bg-card p-6 shadow-sm transition-all duration-200 hover:shadow-md" 
         />
         <MetricChart 
           title="Glucose" 
-          metricType="glucose" 
+          metricType="glucose"
+          className="rounded-xl border bg-card p-6 shadow-sm transition-all duration-200 hover:shadow-md" 
         />
         <MetricChart 
           title="Heart Rate" 
-          metricType="heartRate" 
-          className="md:col-span-2 lg:col-span-1"
+          metricType="heartRate"
+          className="rounded-xl border bg-card p-6 shadow-sm transition-all duration-200 hover:shadow-md md:col-span-2 lg:col-span-1"
         />
         <div className="md:col-span-2 lg:col-span-1">
-          <RecentReadings />
+          <RecentReadings className="rounded-xl border bg-card h-full p-6 shadow-sm transition-all duration-200 hover:shadow-md" />
         </div>
       </div>
     </div>
