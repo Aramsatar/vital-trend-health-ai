@@ -7,9 +7,12 @@ import {
   MenubarMenu,
   MenubarTrigger,
   MenubarContent,
-  MenubarItem
+  MenubarItem,
+  MenubarSeparator
 } from "@/components/ui/menubar";
 import { useNavigate } from "react-router-dom";
+import { ModeToggle } from "@/components/mode-toggle";
+import { Button } from "@/components/ui/button";
 
 export function Header() {
   const { theme, setTheme } = useTheme();
@@ -46,6 +49,28 @@ export function Header() {
                 <MenubarItem onClick={() => navigate('/dashboard')}>
                   Dashboard
                 </MenubarItem>
+                <MenubarItem onClick={() => navigate('/welcome')}>
+                  Welcome Page
+                </MenubarItem>
+                <MenubarSeparator />
+                <MenubarItem onClick={() => navigate('/metrics')}>
+                  Metrics
+                </MenubarItem>
+                <MenubarItem onClick={() => navigate('/trends')}>
+                  Trends
+                </MenubarItem>
+              </MenubarContent>
+            </MenubarMenu>
+            
+            <MenubarMenu>
+              <MenubarTrigger className="cursor-pointer">Features</MenubarTrigger>
+              <MenubarContent>
+                <MenubarItem onClick={() => navigate('/chat')}>
+                  Chat with AI
+                </MenubarItem>
+                <MenubarItem onClick={() => navigate('/calendar')}>
+                  Calendar
+                </MenubarItem>
               </MenubarContent>
             </MenubarMenu>
           </Menubar>
@@ -54,6 +79,18 @@ export function Header() {
         <div className="flex items-center gap-4">
           <div className="text-sm font-medium text-muted-foreground hidden md:block">
             Welcome to Healthy AI Dashboard
+          </div>
+          
+          <div className="flex items-center gap-2">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={() => navigate('/')}
+              className="hidden sm:inline-flex"
+            >
+              Back to Home
+            </Button>
+            <ModeToggle />
           </div>
         </div>
       </div>
