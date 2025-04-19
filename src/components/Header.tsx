@@ -2,10 +2,19 @@
 import { useTheme } from "@/context/ThemeContext";
 import { Menu } from "lucide-react";
 import { useSidebar } from "@/components/ui/sidebar-new";
+import { 
+  Menubar,
+  MenubarMenu,
+  MenubarTrigger,
+  MenubarContent,
+  MenubarItem
+} from "@/components/ui/menubar";
+import { useNavigate } from "react-router-dom";
 
 export function Header() {
   const { theme, setTheme } = useTheme();
   const { open, setOpen } = useSidebar();
+  const navigate = useNavigate();
 
   return (
     <header className="sticky top-0 z-50 px-6 py-3 border-b border-border bg-background/95 backdrop-blur-sm">
@@ -26,6 +35,20 @@ export function Header() {
             />
             <span className="font-semibold">Healthy AI</span>
           </div>
+
+          <Menubar className="hidden md:flex border-none bg-transparent">
+            <MenubarMenu>
+              <MenubarTrigger className="cursor-pointer">Navigation</MenubarTrigger>
+              <MenubarContent>
+                <MenubarItem onClick={() => navigate('/')}>
+                  Landing Page
+                </MenubarItem>
+                <MenubarItem onClick={() => navigate('/dashboard')}>
+                  Dashboard
+                </MenubarItem>
+              </MenubarContent>
+            </MenubarMenu>
+          </Menubar>
         </div>
         
         <div className="flex items-center gap-4">
