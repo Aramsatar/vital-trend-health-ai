@@ -1,23 +1,23 @@
 
 import { useTheme } from "@/context/ThemeContext";
-import { Menu } from "lucide-react";
+import { Menu, Heart } from "lucide-react";
 import { useSidebar } from "@/components/ui/sidebar-new";
 import { 
-  Menubar,
-  MenubarMenu,
-  MenubarTrigger,
-  MenubarContent,
-  MenubarItem,
-  MenubarSeparator
-} from "@/components/ui/menubar";
-import { useNavigate } from "react-router-dom";
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
+import { Link } from "react-router-dom";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
 
 export function Header() {
   const { theme, setTheme } = useTheme();
   const { open, setOpen } = useSidebar();
-  const navigate = useNavigate();
 
   return (
     <header className="sticky top-0 z-50 px-6 py-3 border-b border-border bg-background/95 backdrop-blur-sm">
@@ -30,50 +30,71 @@ export function Header() {
             <Menu className="h-5 w-5" />
           </button>
           
-          <div className="flex items-center gap-2 md:hidden">
-            <img 
-              src="/lovable-uploads/4d3ab7f0-86f1-4f8e-9d38-45eb6e1f8063.png" 
-              alt="Healthy AI" 
-              className="h-6 w-6"
-            />
-            <span className="font-semibold">Healthy AI</span>
+          <div className="flex items-center gap-2">
+            <Heart className="h-6 w-6 text-primary" />
+            <span className="text-xl font-bold">HealthMetrics AI</span>
           </div>
 
-          <Menubar className="hidden md:flex border-none bg-transparent">
-            <MenubarMenu>
-              <MenubarTrigger className="cursor-pointer">Navigation</MenubarTrigger>
-              <MenubarContent>
-                <MenubarItem onClick={() => navigate('/')}>
-                  Landing Page
-                </MenubarItem>
-                <MenubarItem onClick={() => navigate('/dashboard')}>
-                  Dashboard
-                </MenubarItem>
-                <MenubarItem onClick={() => navigate('/welcome')}>
-                  Welcome Page
-                </MenubarItem>
-                <MenubarSeparator />
-                <MenubarItem onClick={() => navigate('/metrics')}>
-                  Metrics
-                </MenubarItem>
-                <MenubarItem onClick={() => navigate('/trends')}>
-                  Trends
-                </MenubarItem>
-              </MenubarContent>
-            </MenubarMenu>
-            
-            <MenubarMenu>
-              <MenubarTrigger className="cursor-pointer">Features</MenubarTrigger>
-              <MenubarContent>
-                <MenubarItem onClick={() => navigate('/chat')}>
-                  Chat with AI
-                </MenubarItem>
-                <MenubarItem onClick={() => navigate('/calendar')}>
-                  Calendar
-                </MenubarItem>
-              </MenubarContent>
-            </MenubarMenu>
-          </Menubar>
+          <NavigationMenu className="hidden md:flex">
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <Link to="/" className="text-sm font-medium transition-colors hover:text-primary">
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>Home</NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>Features</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                    <li className="row-span-3">
+                      <NavigationMenuLink asChild>
+                        <Link
+                          to="#features"
+                          className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-primary/20 to-primary/40 p-6 no-underline outline-none focus:shadow-md"
+                        >
+                          <div className="mt-4 mb-2 text-lg font-medium">
+                            HealthMetrics AI
+                          </div>
+                          <p className="text-sm leading-tight text-muted-foreground">
+                            Your complete health companion with AI-powered insights
+                          </p>
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                    <li>
+                      <Link to="/chat" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                        <div className="text-sm font-medium leading-none">AI Assistant</div>
+                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          Get personalized health insights and recommendations
+                        </p>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/metrics" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                        <div className="text-sm font-medium leading-none">Metrics</div>
+                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          Track your vital health metrics in one place
+                        </p>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/calendar" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                        <div className="text-sm font-medium leading-none">Calendar</div>
+                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          Schedule and track your health activities
+                        </p>
+                      </Link>
+                    </li>
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link to="/welcome" className="text-sm font-medium transition-colors hover:text-primary">
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>Demo</NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
         </div>
         
         <div className="flex items-center gap-4">
@@ -81,14 +102,18 @@ export function Header() {
             Welcome to Healthy AI Dashboard
           </div>
           
-          <div className="flex items-center gap-2">
+          <div className="flex items
+-center gap-2">
             <Button 
               variant="ghost" 
               size="sm" 
-              onClick={() => navigate('/')}
+              asChild
               className="hidden sm:inline-flex"
             >
-              Back to Home
+              <Link to="/auth?mode=signin">Sign In</Link>
+            </Button>
+            <Button size="sm" asChild>
+              <Link to="/auth?mode=signup">Get Started</Link>
             </Button>
             <ModeToggle />
           </div>
