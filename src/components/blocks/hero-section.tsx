@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -8,14 +7,12 @@ import { Mockup, MockupFrame } from "@/components/ui/mockup";
 import { Glow } from "@/components/ui/glow";
 import { useTheme } from "@/context/ThemeContext";
 import { cn } from "@/lib/utils";
-
 interface HeroAction {
   text: string;
   href: string;
   icon?: React.ReactNode;
   variant?: "default" | "glow";
 }
-
 interface HeroProps {
   badge?: {
     text: string;
@@ -33,7 +30,6 @@ interface HeroProps {
     alt: string;
   };
 }
-
 export function HeroSection({
   badge,
   title,
@@ -45,7 +41,6 @@ export function HeroSection({
     theme: resolvedTheme
   } = useTheme();
   const imageSrc = resolvedTheme === "light" ? image.light : image.dark;
-  
   return <section className={cn("bg-background text-foreground", "py-12 sm:py-24 md:py-32 px-4", "overflow-hidden pb-0")}>
       <div className="mx-auto flex max-w-7xl flex-col gap-12 pt-16 sm:gap-24">
         <div className="flex flex-col items-center gap-6 text-center sm:gap-12">
@@ -86,7 +81,7 @@ export function HeroSection({
               <Mockup type="responsive">
                 {/* Fix: Adding children content to the Mockup component */}
                 <div className="p-4">
-                  <img src={imageSrc} alt={image.alt} className="w-full h-auto" />
+                  
                 </div>
               </Mockup>
             </MockupFrame>
