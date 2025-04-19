@@ -32,8 +32,8 @@ export function Header() {
           </button>
           
           <div className="flex items-center gap-2">
-            <Heart className="h-6 w-6 text-primary" />
-            <span className="text-xl font-bold">HealthMetrics AI</span>
+            <Icons.healthlyLogo />
+            <span className="text-xl font-bold">Healthly AI</span>
           </div>
 
           <NavigationMenu className="hidden md:flex">

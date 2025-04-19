@@ -28,5 +28,12 @@ export const Icons = {
   moon: Moon,
   sun: Sun,
   logOut: LogOut,
-  menu: Menu
+  menu: Menu,
+  healthlyLogo: () => (
+    <img 
+      src="/lovable-uploads/cd438ca8-78ca-443f-92e0-79a6cf85291b.png" 
+      alt="Healthly Logo" 
+      className="h-8 w-8 rounded-lg"
+    />
+  )
 }

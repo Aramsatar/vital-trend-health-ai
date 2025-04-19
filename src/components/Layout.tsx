@@ -1,4 +1,3 @@
-
 import { Outlet } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -46,19 +45,14 @@ export function Layout() {
         <Sidebar open={sidebarOpen} setOpen={setSidebarOpen}>
           <SidebarBody className="flex flex-col justify-between h-full p-4 gap-6">
             <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-              {/* Fixed logo section that doesn't duplicate on hover */}
               <div className="flex items-center justify-between mb-8">
                 <div className="flex items-center gap-2">
-                  <img 
-                    src="/lovable-uploads/4d3ab7f0-86f1-4f8e-9d38-45eb6e1f8063.png" 
-                    alt="Healthy AI" 
-                    className="h-8 w-8"
-                  />
+                  <Icons.healthlyLogo />
                   <span className={cn(
                     "font-semibold text-lg text-foreground",
                     !sidebarOpen && "hidden"
                   )}>
-                    Healthy AI
+                    Healthly AI
                   </span>
                 </div>
               </div>
