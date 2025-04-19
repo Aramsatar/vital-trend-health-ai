@@ -1,6 +1,6 @@
 
 import { useTheme } from "@/context/ThemeContext";
-import { Menu, Heart } from "lucide-react";
+import { Heart } from "lucide-react";
 import { useSidebar } from "@/components/ui/sidebar-new";
 import { 
   NavigationMenu,
@@ -14,6 +14,7 @@ import {
 import { Link } from "react-router-dom";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
+import { Icons } from "@/components/ui/icons";
 
 export function Header() {
   const { theme, setTheme } = useTheme();
@@ -27,7 +28,7 @@ export function Header() {
             className="md:hidden text-muted-foreground hover:text-foreground transition-colors"
             onClick={() => setOpen(!open)}
           >
-            <Menu className="h-5 w-5" />
+            <Icons.menu className="h-5 w-5" />
           </button>
           
           <div className="flex items-center gap-2">
@@ -38,7 +39,7 @@ export function Header() {
           <NavigationMenu className="hidden md:flex">
             <NavigationMenuList>
               <NavigationMenuItem>
-                <Link to="/" className="text-sm font-medium transition-colors hover:text-primary">
+                <Link to="/dashboard" className="text-sm font-medium transition-colors hover:text-primary">
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>Home</NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
@@ -49,7 +50,7 @@ export function Header() {
                     <li className="row-span-3">
                       <NavigationMenuLink asChild>
                         <Link
-                          to="#features"
+                          to="/dashboard"
                           className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-primary/20 to-primary/40 p-6 no-underline outline-none focus:shadow-md"
                         >
                           <div className="mt-4 mb-2 text-lg font-medium">
@@ -87,11 +88,6 @@ export function Header() {
                     </li>
                   </ul>
                 </NavigationMenuContent>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link to="/welcome" className="text-sm font-medium transition-colors hover:text-primary">
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>Demo</NavigationMenuLink>
-                </Link>
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
