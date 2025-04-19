@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -79,8 +80,14 @@ export function HeroSection({
           <div className="relative pt-12">
             <MockupFrame size="small">
               <Mockup type="responsive">
-                {/* Fix: Adding children content to the Mockup component */}
-                
+                {/* Added children to the Mockup component */}
+                <div className="overflow-hidden">
+                  <img 
+                    src={imageSrc} 
+                    alt={image.alt}
+                    className="w-full h-auto object-cover"
+                  />
+                </div>
               </Mockup>
             </MockupFrame>
             <Glow variant="top" />
