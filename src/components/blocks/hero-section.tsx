@@ -80,9 +80,7 @@ export function HeroSection({
             <MockupFrame size="small">
               <Mockup type="responsive">
                 {/* Fix: Adding children content to the Mockup component */}
-                <div className="p-4">
-                  
-                </div>
+                
               </Mockup>
             </MockupFrame>
             <Glow variant="top" />
