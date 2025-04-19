@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -8,49 +7,36 @@ import { MetricsPreview } from "@/components/blocks/metrics-preview";
 import { AIAssistantPreview } from "@/components/blocks/ai-assistant-preview";
 import { WelcomeNav } from "@/components/WelcomeNav";
 import { HeroSection } from "@/components/blocks/hero-section";
-
 export function Landing() {
   const navigate = useNavigate();
-  
   const handleGetStarted = () => {
     navigate('/auth');
   };
-
-  return (
-    <div className="flex flex-col min-h-screen overflow-x-hidden">
+  return <div className="flex flex-col min-h-screen overflow-x-hidden">
       {/* Navigation */}
       <WelcomeNav />
       
       {/* Hero Section */}
-      <HeroSection
-        badge={{
-          text: "New AI Features",
-          action: {
-            text: "Learn more",
-            href: "#features"
-          }
-        }}
-        title="Take control of your health with AI-powered insights"
-        description="Track your vital health metrics and get personalized recommendations from our advanced AI assistant, all in one beautifully designed platform."
-        actions={[
-          {
-            text: "Get Started",
-            href: "/auth?mode=signup",
-            variant: "glow",
-            icon: <ArrowRight className="h-4 w-4" />
-          },
-          {
-            text: "View Demo",
-            href: "/welcome",
-            variant: "default"
-          }
-        ]}
-        image={{
-          light: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3",
-          dark: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3",
-          alt: "Health metrics dashboard preview"
-        }}
-      />
+      <HeroSection badge={{
+      text: "New AI Features",
+      action: {
+        text: "Learn more",
+        href: "#features"
+      }
+    }} title="Take control of your health with AI-powered insights" description="Track your vital health metrics and get personalized recommendations from our advanced AI assistant, all in one beautifully designed platform." actions={[{
+      text: "Get Started",
+      href: "/auth?mode=signup",
+      variant: "glow",
+      icon: <ArrowRight className="h-4 w-4" />
+    }, {
+      text: "View Demo",
+      href: "/welcome",
+      variant: "default"
+    }]} image={{
+      light: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3",
+      dark: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3",
+      alt: "Health metrics dashboard preview"
+    }} />
 
       {/* Features Section with anchor for navigation */}
       <div id="features">
@@ -81,7 +67,7 @@ export function Landing() {
             <Button size="lg" onClick={handleGetStarted} variant="secondary" className="text-primary font-semibold">
               Get Started For Free
             </Button>
-            <Button size="lg" variant="outline" className="text-white border-white hover:bg-white/20" onClick={() => navigate('/auth')}>
+            <Button size="lg" variant="outline" onClick={() => navigate('/auth')} className="border-white hover:bg-white/20 text-sky-950">
               Sign In
             </Button>
           </div>
@@ -104,6 +90,5 @@ export function Landing() {
           </div>
         </div>
       </footer>
-    </div>
-  );
+    </div>;
 }
