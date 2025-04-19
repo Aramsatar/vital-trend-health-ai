@@ -72,7 +72,7 @@ export function Layout() {
                   <SidebarLink 
                     key={item.name} 
                     link={item}
-                    className="transition-all duration-200 hover:bg-accent/20 rounded-lg data-[active=true]:bg-accent/30"
+                    className="transition-all duration-200 hover:bg-primary/10 rounded-lg text-foreground/80 hover:text-primary data-[active=true]:bg-primary/15 data-[active=true]:text-primary"
                   />
                 ))}
               </nav>
@@ -81,7 +81,7 @@ export function Layout() {
             <div className="space-y-2">
               <button
                 onClick={() => document.documentElement.classList.toggle('dark')}
-                className="flex items-center gap-3 w-full p-2.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent/20 transition-all duration-200"
+                className="flex items-center gap-3 w-full p-2.5 rounded-lg text-foreground/80 hover:text-primary hover:bg-primary/10 transition-all duration-200"
               >
                 <Icons.sun className="w-5 h-5 flex-shrink-0 dark:hidden" />
                 <Icons.moon className="w-5 h-5 flex-shrink-0 hidden dark:block" />

@@ -102,18 +102,17 @@ export function Header() {
             Welcome to Healthy AI Dashboard
           </div>
           
-          <div className="flex items
--center gap-2">
+          <div className="flex items-center gap-2">
             <Button 
               variant="ghost" 
               size="sm" 
               asChild
               className="hidden sm:inline-flex"
             >
-              <Link to="/auth?mode=signin">Sign In</Link>
+              <Link to="/chat">Talk to AI Assistant</Link>
             </Button>
-            <Button size="sm" asChild>
-              <Link to="/auth?mode=signup">Get Started</Link>
+            <Button size="sm" asChild className="bg-primary hover:bg-primary/90">
+              <Link to="/metrics">View Health Metrics</Link>
             </Button>
             <ModeToggle />
           </div>
