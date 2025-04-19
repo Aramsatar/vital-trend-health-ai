@@ -11,7 +11,8 @@ import {
   Settings, 
   Moon, 
   Sun, 
-  LogOut 
+  LogOut,
+  Menu
 } from "lucide-react"
 
 export const Icons = {
@@ -26,5 +27,6 @@ export const Icons = {
   settings: Settings,
   moon: Moon,
   sun: Sun,
-  logOut: LogOut
+  logOut: LogOut,
+  menu: Menu
 }
