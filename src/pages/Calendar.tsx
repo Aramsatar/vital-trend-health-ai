@@ -1,23 +1,11 @@
 
-import { PageHeader } from "@/components/PageHeader";
-import { CalendarDays } from "lucide-react";
+import { CalendarDemo } from "./CalendarDemo";
 
 export function Calendar() {
   return (
-    <div className="min-h-[70vh] flex flex-col gap-12 justify-center items-center bg-gradient-to-br from-[#D6BCFA] via-[#F2FCE2] to-white rounded-xl shadow-md px-4 py-10 animate-fade-in">
-      <div className="flex flex-col items-center">
-        <CalendarDays className="w-16 h-16 text-primary mb-4 drop-shadow-xl" />
-        <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900/90 mb-3 drop-shadow-lg">
-          Calendar View
-        </h1>
-        <p className="text-xl md:text-2xl text-muted-foreground font-medium max-w-2xl text-center mb-4">
-          Easily schedule and track your health events—our comprehensive calendar is in development!
-        </p>
-      </div>
-      <div>
-        <span className="inline-block px-4 py-2 rounded-lg bg-white/80 text-primary shadow-inner font-semibold text-lg">
-          📅 Watch this space for more!
-        </span>
+    <div className="flex flex-1 min-h-[70vh] items-center justify-center py-6 animate-fade-in">
+      <div className="w-full max-w-5xl">
+        <CalendarDemo />
       </div>
     </div>
   );
