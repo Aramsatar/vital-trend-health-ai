@@ -1,10 +1,9 @@
 
 import { useState } from "react";
-import { PageHeader } from "@/components/PageHeader";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Send, Plus, Trash2, MessageSquare, ArrowLeft } from "lucide-react";
+import { Send, Plus, Trash2, MessageSquare, ArrowLeft, Search, History, Files, Library } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { format } from "date-fns";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -144,8 +143,26 @@ export function Chat() {
     }
   };
 
+  const suggestionCards = [
+    {
+      title: "What's happening with my health?",
+      description: "See what's been happening with your health metrics over the last 24 hours",
+      icon: <div className="p-2 bg-purple-500/20 rounded-lg"><History size={18} className="text-purple-500" /></div>
+    },
+    {
+      title: "Medication interaction check",
+      description: "Check if your current medications have any interactions to be aware of",
+      icon: <div className="p-2 bg-blue-500/20 rounded-lg"><Files size={18} className="text-blue-500" /></div>
+    },
+    {
+      title: "Generate health report",
+      description: "Create a summary of your health trends to share with your doctor",
+      icon: <div className="p-2 bg-green-500/20 rounded-lg"><Library size={18} className="text-green-500" /></div>
+    }
+  ];
+
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 max-w-[1400px] mx-auto">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Button 
@@ -165,11 +182,21 @@ export function Chat() {
       
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         {/* Chat History Sidebar */}
-        <Card className="md:col-span-1 order-2 md:order-1 h-[calc(100vh-14rem)] overflow-hidden">
-          <CardHeader className="p-3">
-            <CardTitle className="text-sm font-medium">Chat History</CardTitle>
+        <Card className="md:col-span-1 order-2 md:order-1 h-[calc(100vh-14rem)] overflow-hidden bg-gradient-to-br from-background to-muted/50">
+          <CardHeader className="p-3 border-b">
+            <div className="flex flex-col space-y-3">
+              <CardTitle className="text-sm font-medium">Chat History</CardTitle>
+              <div className="relative">
+                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                <Input
+                  type="search"
+                  placeholder="Search chats..."
+                  className="w-full pl-8 bg-background h-9"
+                />
+              </div>
+            </div>
           </CardHeader>
-          <CardContent className="p-0 flex flex-col h-[calc(100%-3rem)] overflow-y-auto">
+          <CardContent className="p-0 flex flex-col h-[calc(100%-4rem)] overflow-y-auto">
             <div className="flex-1 overflow-auto">
               {chatHistories.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full text-center p-4">
@@ -185,7 +212,7 @@ export function Chat() {
                     <div
                       key={chat.id}
                       onClick={() => setActiveChat(chat.id)}
-                      className={`p-3 cursor-pointer hover:bg-muted/50 border-b last:border-b-0 flex justify-between ${
+                      className={`p-3 cursor-pointer hover:bg-muted/50 border-b last:border-b-0 flex justify-between group ${
                         activeChat === chat.id ? "bg-muted" : ""
                       }`}
                     >
@@ -197,7 +224,7 @@ export function Chat() {
                       <Button
                         variant="ghost" 
                         size="icon"
-                        className="h-8 w-8 opacity-0 group-hover:opacity-100 hover:opacity-100"
+                        className="h-8 w-8 opacity-0 group-hover:opacity-100"
                         onClick={(e) => {
                           e.stopPropagation();
                           deleteChat(chat.id);
@@ -214,7 +241,7 @@ export function Chat() {
         </Card>
 
         {/* Chat Content */}
-        <Card className="md:col-span-3 order-1 md:order-2 h-[calc(100vh-14rem)]">
+        <Card className="md:col-span-3 order-1 md:order-2 h-[calc(100vh-14rem)] bg-gradient-to-br from-background via-background to-secondary/20">
           <CardContent className="p-0 flex flex-col h-full">
             <Tabs defaultValue="chat" className="flex-1 flex flex-col">
               <TabsList className="px-4 pt-2 justify-start border-b rounded-none">
@@ -226,12 +253,29 @@ export function Chat() {
                 <div className="flex-1 overflow-y-auto p-4 space-y-4">
                   {!activeChat ? (
                     <div className="flex flex-col items-center justify-center h-full text-center">
-                      <MessageSquare className="h-12 w-12 text-muted-foreground mb-2" />
-                      <h3 className="font-medium text-lg">Welcome to Health AI Chat</h3>
-                      <p className="text-muted-foreground mb-4">Start a new conversation to get health advice</p>
-                      <Button onClick={createNewChat}>
-                        <Plus className="mr-2 h-4 w-4" /> New Conversation
-                      </Button>
+                      <div className="max-w-lg mx-auto">
+                        <h3 className="text-2xl font-semibold bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent mb-2">Hello! I'm your Health Assistant</h3>
+                        <p className="text-xl text-muted-foreground mb-8">How can I help you today?</p>
+                        
+                        <div className="grid grid-cols-1 gap-4">
+                          {suggestionCards.map((suggestion, index) => (
+                            <div 
+                              key={index} 
+                              className="p-4 rounded-xl border bg-card/30 backdrop-blur-sm hover:bg-card/50 cursor-pointer transition-all flex items-center gap-3"
+                              onClick={() => {
+                                setInput(suggestion.title);
+                                createNewChat();
+                              }}
+                            >
+                              {suggestion.icon}
+                              <div>
+                                <h4 className="font-medium mb-1">{suggestion.title}</h4>
+                                <p className="text-sm text-muted-foreground">{suggestion.description}</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
                     </div>
                   ) : (
                     currentChat?.messages.map((message) => (
@@ -247,9 +291,9 @@ export function Chat() {
                             </Avatar>
                           )}
                           <div
-                            className={`p-3 rounded-lg ${
+                            className={`p-3 rounded-2xl ${
                               message.sender === "user"
-                                ? "bg-primary text-primary-foreground"
+                                ? "bg-gradient-to-r from-primary to-purple-500 text-primary-foreground"
                                 : "bg-secondary text-secondary-foreground"
                             }`}
                           >
@@ -270,10 +314,10 @@ export function Chat() {
                       placeholder={activeChat ? "Type your message..." : "Select or create a chat to start"}
                       value={input}
                       onChange={(e) => setInput(e.target.value)}
-                      className="flex-1"
+                      className="flex-1 bg-card/30"
                       disabled={!activeChat}
                     />
-                    <Button type="submit" size="icon" disabled={!activeChat}>
+                    <Button type="submit" size="icon" disabled={!activeChat} className="bg-gradient-to-r from-primary to-purple-500">
                       <Send size={18} />
                     </Button>
                   </form>
@@ -285,7 +329,7 @@ export function Chat() {
                   <div>
                     <h3 className="font-medium text-lg mb-2">Health Summary</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <Card>
+                      <Card className="overflow-hidden bg-gradient-to-br from-primary/5 to-primary/10 border-primary/10">
                         <CardHeader className="pb-2">
                           <CardTitle className="text-base font-medium">Your Blood Pressure Trend</CardTitle>
                         </CardHeader>
@@ -297,14 +341,14 @@ export function Chat() {
                                 d="M0,120 C100,120 150,80 200,100 S250,150 300,140 S350,60 400,80 S450,130 500,140 S550,90 600,80 S650,110 700,100 S750,120 800,120" 
                                 fill="none" 
                                 stroke="currentColor" 
-                                strokeWidth="2"
+                                strokeWidth="3"
                                 className="text-primary"
                               />
                               <path 
                                 d="M0,150 C100,150 150,130 200,140 S250,170 300,160 S350,120 400,130 S450,160 500,170 S550,140 600,130 S650,150 700,140 S750,150 800,150" 
                                 fill="none" 
                                 stroke="currentColor" 
-                                strokeWidth="2"
+                                strokeWidth="3"
                                 className="text-primary/60"
                               />
                             </svg>
@@ -315,7 +359,7 @@ export function Chat() {
                         </CardContent>
                       </Card>
                       
-                      <Card>
+                      <Card className="overflow-hidden bg-gradient-to-br from-amber-500/5 to-amber-500/10 border-amber-500/10">
                         <CardHeader className="pb-2">
                           <CardTitle className="text-base font-medium">Health Recommendations</CardTitle>
                         </CardHeader>
@@ -339,7 +383,7 @@ export function Chat() {
                     </div>
                   </div>
                   
-                  <Card>
+                  <Card className="overflow-hidden bg-gradient-to-br from-indigo-500/5 to-indigo-500/10 border-indigo-500/10">
                     <CardHeader className="pb-2">
                       <CardTitle className="text-base font-medium">Topics You've Discussed</CardTitle>
                     </CardHeader>

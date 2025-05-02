@@ -27,7 +27,7 @@ const navigation = [
 
 export function Layout() {
   const isMobile = useIsMobile();
-  const [sidebarOpen, setSidebarOpen] = useState(false); // Default to closed
+  const [sidebarOpen, setSidebarOpen] = useState(true); // Default to open
   const navigate = useNavigate();
   
   const handleSignOut = async () => {
@@ -41,10 +41,10 @@ export function Layout() {
   };
   
   return (
-    <SidebarProvider open={sidebarOpen} setOpen={setSidebarOpen}>
+    <SidebarProvider open={sidebarOpen} setOpen={setSidebarOpen} animate={false}>
       <div className="min-h-screen flex bg-background">
         {/* Mobile sidebar - only visible on mobile devices */}
-        <Sidebar open={sidebarOpen} setOpen={setSidebarOpen}>
+        <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} animate={false}>
           <SidebarBody className="flex flex-col justify-between h-full p-4 gap-6">
             <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
               <div className="flex items-center justify-between mb-8">

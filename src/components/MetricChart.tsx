@@ -71,9 +71,9 @@ export function MetricChart({
         return (
           <ResponsiveContainer width="100%" height={minimalUI ? 100 : 300}>
             <LineChart data={data} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
-              {showAxis && <CartesianGrid strokeDasharray="3 3" vertical={false} />}
-              {showAxis && <XAxis dataKey="date" tick={{ fontSize: 12 }} />}
-              {showAxis && <YAxis domain={[60, 160]} tick={{ fontSize: 12 }} />}
+              {showAxis && <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.1)" />}
+              {showAxis && <XAxis dataKey="date" tick={{ fontSize: 12 }} stroke="rgba(255,255,255,0.5)" />}
+              {showAxis && <YAxis domain={[60, 160]} tick={{ fontSize: 12 }} stroke="rgba(255,255,255,0.5)" />}
               {!minimalUI && (
                 <Tooltip
                   contentStyle={{
@@ -83,6 +83,16 @@ export function MetricChart({
                   }}
                 />
               )}
+              <defs>
+                <linearGradient id="colorSystolic" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor={lineColor || "#3b82f6"} stopOpacity={0.8} />
+                  <stop offset="95%" stopColor={lineColor || "#3b82f6"} stopOpacity={0} />
+                </linearGradient>
+                <linearGradient id="colorDiastolic" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor={lineColor || "#8b5cf6"} stopOpacity={0.8} />
+                  <stop offset="95%" stopColor={lineColor || "#8b5cf6"} stopOpacity={0} />
+                </linearGradient>
+              </defs>
               <Line
                 type="monotone"
                 dataKey="systolic"
@@ -108,9 +118,9 @@ export function MetricChart({
         return (
           <ResponsiveContainer width="100%" height={minimalUI ? 100 : 300}>
             <AreaChart data={data} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
-              {showAxis && <CartesianGrid strokeDasharray="3 3" vertical={false} />}
-              {showAxis && <XAxis dataKey="date" tick={{ fontSize: 12 }} />}
-              {showAxis && <YAxis domain={[70, 150]} tick={{ fontSize: 12 }} />}
+              {showAxis && <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.1)" />}
+              {showAxis && <XAxis dataKey="date" tick={{ fontSize: 12 }} stroke="rgba(255,255,255,0.5)" />}
+              {showAxis && <YAxis domain={[70, 150]} tick={{ fontSize: 12 }} stroke="rgba(255,255,255,0.5)" />}
               {!minimalUI && (
                 <Tooltip
                   contentStyle={{
@@ -142,9 +152,9 @@ export function MetricChart({
         return (
           <ResponsiveContainer width="100%" height={minimalUI ? 100 : 300}>
             <AreaChart data={data} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
-              {showAxis && <CartesianGrid strokeDasharray="3 3" vertical={false} />}
-              {showAxis && <XAxis dataKey="date" tick={{ fontSize: 12 }} />}
-              {showAxis && <YAxis domain={[50, 110]} tick={{ fontSize: 12 }} />}
+              {showAxis && <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.1)" />}
+              {showAxis && <XAxis dataKey="date" tick={{ fontSize: 12 }} stroke="rgba(255,255,255,0.5)" />}
+              {showAxis && <YAxis domain={[50, 110]} tick={{ fontSize: 12 }} stroke="rgba(255,255,255,0.5)" />}
               {!minimalUI && (
                 <Tooltip
                   contentStyle={{
@@ -193,7 +203,7 @@ export function MetricChart({
           )}
         </CardHeader>
       )}
-      <CardContent>{renderChart()}</CardContent>
+      <CardContent className="overflow-hidden">{renderChart()}</CardContent>
     </Card>
   );
 }

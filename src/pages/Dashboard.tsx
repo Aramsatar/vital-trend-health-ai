@@ -155,11 +155,11 @@ export function Dashboard() {
           
           <div className="grid gap-6 md:grid-cols-2">
             {/* Detailed Blood Pressure Chart */}
-            <Card className="shadow-sm">
+            <Card className="shadow-sm overflow-hidden bg-gradient-to-br from-primary/5 to-primary/10 border-primary/10">
               <CardHeader className="pb-2">
                 <CardTitle className="text-lg font-medium">Blood Pressure History</CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="overflow-hidden">
                 <div className="h-[300px]">
                   <MetricChart 
                     title="" 
@@ -172,18 +172,29 @@ export function Dashboard() {
             </Card>
 
             {/* Heart ECG Chart */}
-            <Card className="shadow-sm">
+            <Card className="shadow-sm overflow-hidden bg-gradient-to-br from-indigo-500/5 to-indigo-500/10 border-indigo-500/10">
               <CardHeader className="pb-2">
                 <CardTitle className="text-lg font-medium">Heart ECG</CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="overflow-hidden">
                 <div className="h-[300px]">
-                  <svg viewBox="0 0 800 200" className="w-full h-full">
+                  <svg viewBox="0 0 800 200" className="w-full h-full" preserveAspectRatio="none">
+                    <defs>
+                      <linearGradient id="ecgGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stopColor="#6366f1" stopOpacity="0.8" />
+                        <stop offset="100%" stopColor="#6366f1" stopOpacity="0.1" />
+                      </linearGradient>
+                    </defs>
                     <path
                       d="M0,100 Q50,100 60,50 T100,100 T140,100 T150,50 T200,100 T250,100 T300,100 Q310,100 320,50 T350,100 T400,100 T450,100 Q460,100 470,50 T500,100 T550,100 T600,100 Q610,100 620,50 T650,100 T700,100 T750,100 Q760,100 770,50 T800,100"
                       fill="none"
                       stroke="#6366f1"
-                      strokeWidth="2"
+                      strokeWidth="3"
+                    />
+                    <path
+                      d="M0,100 Q50,100 60,50 T100,100 T140,100 T150,50 T200,100 T250,100 T300,100 Q310,100 320,50 T350,100 T400,100 T450,100 Q460,100 470,50 T500,100 T550,100 T600,100 Q610,100 620,50 T650,100 T700,100 T750,100 Q760,100 770,50 T800,100 L800,200 L0,200 Z"
+                      fill="url(#ecgGradient)"
+                      opacity="0.2"
                     />
                   </svg>
                 </div>
@@ -192,34 +203,34 @@ export function Dashboard() {
           </div>
           
           <div className="grid gap-6 md:grid-cols-3">
-            <Card className="col-span-1 shadow-sm">
+            <Card className="col-span-1 shadow-sm overflow-hidden bg-gradient-to-br from-background to-muted/30">
               <CardHeader className="pb-2">
                 <CardTitle className="text-lg font-medium">Latest Readings</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-2">
-                  <div className="flex justify-between items-center p-2 bg-muted/50 rounded-md">
+                  <div className="flex justify-between items-center p-2 bg-primary/5 rounded-md">
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 rounded-full bg-primary"></div>
                       <span className="text-sm font-medium">Blood Pressure</span>
                     </div>
                     <span>120/80 mmHg</span>
                   </div>
-                  <div className="flex justify-between items-center p-2 bg-muted/50 rounded-md">
+                  <div className="flex justify-between items-center p-2 bg-amber-500/5 rounded-md">
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 rounded-full bg-amber-500"></div>
                       <span className="text-sm font-medium">Temperature</span>
                     </div>
                     <span>98.6 °F</span>
                   </div>
-                  <div className="flex justify-between items-center p-2 bg-muted/50 rounded-md">
+                  <div className="flex justify-between items-center p-2 bg-indigo-500/5 rounded-md">
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 rounded-full bg-indigo-500"></div>
                       <span className="text-sm font-medium">Heart Rate</span>
                     </div>
                     <span>72 BPM</span>
                   </div>
-                  <div className="flex justify-between items-center p-2 bg-muted/50 rounded-md">
+                  <div className="flex justify-between items-center p-2 bg-green-500/5 rounded-md">
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 rounded-full bg-green-500"></div>
                       <span className="text-sm font-medium">Glucose</span>
@@ -230,25 +241,25 @@ export function Dashboard() {
               </CardContent>
             </Card>
             
-            <Card className="col-span-2 shadow-sm">
+            <Card className="col-span-2 shadow-sm overflow-hidden bg-gradient-to-br from-background to-muted/30">
               <CardHeader className="pb-2">
                 <CardTitle className="text-lg font-medium">Health Stats</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <div className="bg-muted/50 p-4 rounded-lg text-center">
+                  <div className="bg-primary/5 p-4 rounded-lg text-center">
                     <div className="text-2xl font-bold">110/70</div>
                     <div className="text-xs text-muted-foreground mt-1">Blood Pressure</div>
                   </div>
-                  <div className="bg-muted/50 p-4 rounded-lg text-center">
+                  <div className="bg-indigo-500/5 p-4 rounded-lg text-center">
                     <div className="text-2xl font-bold">85</div>
                     <div className="text-xs text-muted-foreground mt-1">Heart Rate (BPM)</div>
                   </div>
-                  <div className="bg-muted/50 p-4 rounded-lg text-center">
+                  <div className="bg-green-500/5 p-4 rounded-lg text-center">
                     <div className="text-2xl font-bold">95</div>
                     <div className="text-xs text-muted-foreground mt-1">Glucose (mg/dL)</div>
                   </div>
-                  <div className="bg-muted/50 p-4 rounded-lg text-center">
+                  <div className="bg-amber-500/5 p-4 rounded-lg text-center">
                     <div className="text-2xl font-bold">9,456</div>
                     <div className="text-xs text-muted-foreground mt-1">Blood Count (/mL)</div>
                   </div>
@@ -259,7 +270,7 @@ export function Dashboard() {
         </TabsContent>
         
         <TabsContent value="readings" className="space-y-4">
-          <Card>
+          <Card className="bg-gradient-to-br from-background to-muted/30">
             <CardContent className="p-0">
               <RecentReadings />
             </CardContent>
@@ -267,27 +278,27 @@ export function Dashboard() {
         </TabsContent>
         
         <TabsContent value="appointments" className="space-y-4">
-          <Card>
+          <Card className="bg-gradient-to-br from-background to-muted/30">
             <CardHeader>
               <CardTitle>Upcoming Appointments</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div className="flex items-center justify-between p-4 border rounded-lg">
+                <div className="flex items-center justify-between p-4 border rounded-lg bg-primary/5">
                   <div>
                     <h4 className="font-medium">Dr. Angela Taylor</h4>
                     <p className="text-sm text-muted-foreground">Heart Specialist</p>
                     <p className="text-sm">10:30am - 11:00am</p>
                   </div>
-                  <Button>Join Call</Button>
+                  <Button className="bg-gradient-to-r from-primary to-purple-500">Join Call</Button>
                 </div>
-                <div className="flex items-center justify-between p-4 border rounded-lg">
+                <div className="flex items-center justify-between p-4 border rounded-lg bg-indigo-500/5">
                   <div>
                     <h4 className="font-medium">Dr. Michael Rodriguez</h4>
                     <p className="text-sm text-muted-foreground">Nutritionist</p>
                     <p className="text-sm">2:00pm - 2:30pm</p>
                   </div>
-                  <Button>Join Call</Button>
+                  <Button className="bg-gradient-to-r from-primary to-purple-500">Join Call</Button>
                 </div>
               </div>
             </CardContent>
