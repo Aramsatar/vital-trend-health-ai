@@ -1,6 +1,5 @@
 
 import { useTheme } from "@/context/ThemeContext";
-import { Heart } from "lucide-react";
 import { useSidebar } from "@/components/ui/sidebar-new";
 import { 
   NavigationMenu,
@@ -36,7 +35,7 @@ export function Header() {
             <span className="text-xl font-bold">Healthly AI</span>
           </div>
 
-          <NavigationMenu className="hidden md:flex">
+          <NavigationMenu className="hidden md:flex ml-6">
             <NavigationMenuList>
               <NavigationMenuItem>
                 <Link to="/dashboard" className="text-sm font-medium transition-colors hover:text-primary">
@@ -63,18 +62,18 @@ export function Header() {
                       </NavigationMenuLink>
                     </li>
                     <li>
-                      <Link to="/chat" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-                        <div className="text-sm font-medium leading-none">AI Assistant</div>
-                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                          Get personalized health insights and recommendations
-                        </p>
-                      </Link>
-                    </li>
-                    <li>
                       <Link to="/metrics" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
                         <div className="text-sm font-medium leading-none">Metrics</div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                           Track your vital health metrics in one place
+                        </p>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/trends" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                        <div className="text-sm font-medium leading-none">Trends</div>
+                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          View historical data and health patterns
                         </p>
                       </Link>
                     </li>

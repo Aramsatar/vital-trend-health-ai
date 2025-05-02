@@ -1,3 +1,4 @@
+
 import { Outlet } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -26,7 +27,7 @@ const navigation = [
 
 export function Layout() {
   const isMobile = useIsMobile();
-  const [sidebarOpen, setSidebarOpen] = useState(!isMobile);
+  const [sidebarOpen, setSidebarOpen] = useState(false); // Default to closed
   const navigate = useNavigate();
   
   const handleSignOut = async () => {
@@ -42,16 +43,14 @@ export function Layout() {
   return (
     <SidebarProvider open={sidebarOpen} setOpen={setSidebarOpen}>
       <div className="min-h-screen flex bg-background">
+        {/* Mobile sidebar - only visible on mobile devices */}
         <Sidebar open={sidebarOpen} setOpen={setSidebarOpen}>
           <SidebarBody className="flex flex-col justify-between h-full p-4 gap-6">
             <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
               <div className="flex items-center justify-between mb-8">
                 <div className="flex items-center gap-2">
                   <Icons.healthlyLogo />
-                  <span className={cn(
-                    "font-semibold text-lg text-foreground",
-                    !sidebarOpen && "hidden"
-                  )}>
+                  <span className="font-semibold text-lg text-foreground">
                     Healthly AI
                   </span>
                 </div>
@@ -62,7 +61,7 @@ export function Layout() {
                   <SidebarLink 
                     key={item.name} 
                     link={item}
-                    className="transition-all duration-200 hover:bg-primary/10 rounded-lg text-foreground/80 hover:text-primary data-[active=true]:bg-primary/15 data-[active=true]:text-primary"
+                    className="transition-all duration-200 hover:bg-primary/10 rounded-lg text-foreground/80 hover:text-primary data-[active=true]:bg-primary/15 data-[active=true]:text-primary p-2"
                   />
                 ))}
               </nav>
@@ -75,10 +74,7 @@ export function Layout() {
               >
                 <Icons.sun className="w-5 h-5 flex-shrink-0 dark:hidden" />
                 <Icons.moon className="w-5 h-5 flex-shrink-0 hidden dark:block" />
-                <span className={cn(
-                  "text-sm font-medium",
-                  !sidebarOpen && "hidden"
-                )}>
+                <span className="text-sm font-medium">
                   Toggle Theme
                 </span>
               </button>
@@ -88,10 +84,7 @@ export function Layout() {
                 className="flex items-center gap-3 w-full p-2.5 rounded-lg text-red-500 hover:text-red-600 hover:bg-red-500/10 transition-all duration-200"
               >
                 <Icons.logOut className="w-5 h-5 flex-shrink-0" />
-                <span className={cn(
-                  "text-sm font-medium",
-                  !sidebarOpen && "hidden"
-                )}>
+                <span className="text-sm font-medium">
                   Sign Out
                 </span>
               </button>
@@ -108,10 +101,8 @@ export function Layout() {
             </div>
           </main>
           
-          <footer className="py-4 px-6 border-t border-border bg-background/95">
-            <div className="text-center text-sm text-muted-foreground">
-              &copy; {new Date().getFullYear()} Healthy AI. All rights reserved.
-            </div>
+          <footer className="py-4 px-6 border-t border-border bg-background/95 text-center text-sm text-muted-foreground">
+            &copy; {new Date().getFullYear()} Healthy AI. All rights reserved.
           </footer>
         </div>
       </div>
