@@ -29,11 +29,11 @@ export const Icons = {
   sun: Sun,
   logOut: LogOut,
   menu: Menu,
-  healthlyLogo: () => (
+  healthlyLogo: ({ className }: { className?: string }) => (
     <img 
       src="/lovable-uploads/cd438ca8-78ca-443f-92e0-79a6cf85291b.png" 
       alt="Healthly Logo" 
-      className="h-8 w-8 rounded-lg"
+      className={className || "h-6 w-6 rounded-lg"}
     />
   )
 }

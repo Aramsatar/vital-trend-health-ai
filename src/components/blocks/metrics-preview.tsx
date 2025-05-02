@@ -1,11 +1,154 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChartLine, ChartBar } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import {
+  LineChart,
+  Line,
+  AreaChart,
+  Area,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer
+} from "recharts";
+
+// Mock data for the charts
+const bloodPressureData = [
+  { date: 'Apr 25', systolic: 130, diastolic: 85 },
+  { date: 'Apr 26', systolic: 135, diastolic: 87 },
+  { date: 'Apr 27', systolic: 132, diastolic: 84 },
+  { date: 'Apr 28', systolic: 140, diastolic: 90 },
+  { date: 'Apr 29', systolic: 135, diastolic: 85 },
+  { date: 'Apr 30', systolic: 128, diastolic: 82 },
+  { date: 'May 1', systolic: 129, diastolic: 83 },
+];
+
+const glucoseData = [
+  { date: 'Apr 25', level: 92 },
+  { date: 'Apr 26', level: 88 },
+  { date: 'Apr 27', level: 95 },
+  { date: 'Apr 28', level: 100 },
+  { date: 'Apr 29', level: 98 },
+  { date: 'Apr 30', level: 90 },
+  { date: 'May 1', level: 93 },
+];
+
+const weightData = [
+  { date: 'Apr 25', weight: 165 },
+  { date: 'Apr 26', weight: 164.5 },
+  { date: 'Apr 27', weight: 164 },
+  { date: 'Apr 28', weight: 164 },
+  { date: 'Apr 29', weight: 163.5 },
+  { date: 'Apr 30', weight: 163 },
+  { date: 'May 1', weight: 162.5 },
+];
 
 export function MetricsPreview() {
   const navigate = useNavigate();
+  const [activeMetric, setActiveMetric] = useState('bloodPressure');
+
+  const renderChart = () => {
+    switch (activeMetric) {
+      case 'bloodPressure':
+        return (
+          <ResponsiveContainer width="100%" height={280}>
+            <LineChart data={bloodPressureData} margin={{ top: 10, right: 10, left: 0, bottom: 10 }}>
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.1)" />
+              <XAxis dataKey="date" tick={{ fontSize: 12, fill: 'var(--muted-foreground)' }} />
+              <YAxis domain={[70, 160]} tick={{ fontSize: 12, fill: 'var(--muted-foreground)' }} />
+              <Tooltip 
+                contentStyle={{ 
+                  backgroundColor: 'var(--card)', 
+                  borderColor: 'var(--border)',
+                  color: 'var(--foreground)',
+                  borderRadius: '0.5rem',
+                  boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)'
+                }}
+              />
+              <Line 
+                type="monotone" 
+                dataKey="systolic" 
+                stroke="#3b82f6" 
+                strokeWidth={2} 
+                dot={{ r: 0 }}
+                activeDot={{ r: 4 }}
+                name="Systolic"
+              />
+              <Line 
+                type="monotone" 
+                dataKey="diastolic" 
+                stroke="#8b5cf6" 
+                strokeWidth={2} 
+                dot={{ r: 0 }}
+                activeDot={{ r: 4 }}
+                name="Diastolic"
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        );
+      case 'glucose':
+        return (
+          <ResponsiveContainer width="100%" height={280}>
+            <AreaChart data={glucoseData} margin={{ top: 10, right: 10, left: 0, bottom: 10 }}>
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.1)" />
+              <XAxis dataKey="date" tick={{ fontSize: 12, fill: 'var(--muted-foreground)' }} />
+              <YAxis domain={[80, 120]} tick={{ fontSize: 12, fill: 'var(--muted-foreground)' }} />
+              <Tooltip 
+                contentStyle={{ 
+                  backgroundColor: 'var(--card)', 
+                  borderColor: 'var(--border)',
+                  color: 'var(--foreground)',
+                  borderRadius: '0.5rem',
+                  boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)'
+                }}
+              />
+              <defs>
+                <linearGradient id="colorGlucose" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#10b981" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <Area 
+                type="monotone" 
+                dataKey="level" 
+                stroke="#10b981" 
+                fillOpacity={1}
+                fill="url(#colorGlucose)"
+                name="Glucose"
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        );
+      case 'weight':
+        return (
+          <ResponsiveContainer width="100%" height={280}>
+            <BarChart data={weightData} margin={{ top: 10, right: 10, left: 0, bottom: 10 }}>
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.1)" />
+              <XAxis dataKey="date" tick={{ fontSize: 12, fill: 'var(--muted-foreground)' }} />
+              <YAxis domain={[160, 170]} tick={{ fontSize: 12, fill: 'var(--muted-foreground)' }} />
+              <Tooltip 
+                contentStyle={{ 
+                  backgroundColor: 'var(--card)', 
+                  borderColor: 'var(--border)',
+                  color: 'var(--foreground)',
+                  borderRadius: '0.5rem',
+                  boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)'
+                }}
+              />
+              <Bar dataKey="weight" fill="#f59e0b" name="Weight" />
+            </BarChart>
+          </ResponsiveContainer>
+        );
+      default:
+        return null;
+    }
+  };
 
   return (
     <section className="py-20 px-4 bg-gradient-to-br from-background to-background/80">
@@ -23,31 +166,45 @@ export function MetricsPreview() {
         <div className="bg-card rounded-xl shadow-lg p-8 border border-border backdrop-blur-sm">
           <div className="mb-6 flex flex-wrap gap-3 justify-center">
             <Badge 
-              variant="secondary" 
-              className="bg-primary text-primary-foreground hover:bg-primary/90 cursor-pointer transition-colors"
+              variant={activeMetric === 'bloodPressure' ? "secondary" : "outline"}
+              className={`cursor-pointer transition-colors ${
+                activeMetric === 'bloodPressure' 
+                ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                : "hover:bg-accent"
+              }`}
+              onClick={() => setActiveMetric('bloodPressure')}
             >
+              <ChartLine className="h-3 w-3 mr-1" />
               Blood Pressure
             </Badge>
             <Badge 
-              variant="outline" 
-              className="cursor-pointer hover:bg-accent transition-colors"
+              variant={activeMetric === 'glucose' ? "secondary" : "outline"}
+              className={`cursor-pointer transition-colors ${
+                activeMetric === 'glucose' 
+                ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                : "hover:bg-accent"
+              }`}
+              onClick={() => setActiveMetric('glucose')}
             >
+              <ChartLine className="h-3 w-3 mr-1" />
               Glucose
             </Badge>
             <Badge 
-              variant="outline" 
-              className="cursor-pointer hover:bg-accent transition-colors"
+              variant={activeMetric === 'weight' ? "secondary" : "outline"}
+              className={`cursor-pointer transition-colors ${
+                activeMetric === 'weight' 
+                ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                : "hover:bg-accent"
+              }`}
+              onClick={() => setActiveMetric('weight')}
             >
+              <ChartBar className="h-3 w-3 mr-1" />
               Weight
             </Badge>
           </div>
           
-          <div className="h-64 w-full bg-black/5 dark:bg-white/5 rounded-lg mb-8 flex items-center justify-center backdrop-blur-sm">
-            <img 
-              src="/lovable-uploads/72aa061a-c8a1-435b-9061-7ff855a452be.png" 
-              alt="Health metrics chart"
-              className="w-full h-full object-contain p-4"
-            />
+          <div className="h-[300px] w-full bg-black/5 dark:bg-white/5 rounded-lg mb-8 flex items-center justify-center backdrop-blur-sm p-4">
+            {renderChart()}
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">

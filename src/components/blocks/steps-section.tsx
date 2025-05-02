@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   Carousel,
   CarouselContent,
@@ -38,6 +38,15 @@ const steps = [
 
 export function StepsSection() {
   const [activeSection, setActiveSection] = useState(0);
+  
+  // Auto-rotate through steps
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveSection((prev) => (prev + 1) % steps.length);
+    }, 3000);
+    
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <section className="py-20 px-4 bg-slate-50 dark:bg-slate-800">
@@ -54,7 +63,7 @@ export function StepsSection() {
             {steps.map((step, index) => (
               <div 
                 key={index}
-                className={`flex items-start gap-4 ${activeSection === index ? 'opacity-100' : 'opacity-60'}`}
+                className={`flex items-start gap-4 transition-opacity duration-500 ${activeSection === index ? 'opacity-100' : 'opacity-60'}`}
                 onMouseEnter={() => setActiveSection(index)}
               >
                 <div className="rounded-full bg-primary/10 border-2 border-primary flex-shrink-0 w-12 h-12 flex items-center justify-center text-primary font-semibold">

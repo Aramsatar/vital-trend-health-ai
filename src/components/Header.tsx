@@ -32,7 +32,7 @@ export function Header() {
           </button>
           
           <div className="flex items-center gap-2">
-            <Icons.healthlyLogo />
+            <Icons.healthlyLogo className="h-8 w-8" />
             <span className="text-xl font-bold">Healthly AI</span>
           </div>
 
