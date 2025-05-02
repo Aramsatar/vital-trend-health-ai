@@ -12,27 +12,32 @@ const steps = [
   {
     number: 1,
     title: "Track Your Metrics",
-    description: "Record your vital health metrics including blood pressure, glucose levels, and heart rate in a few simple taps."
+    description: "Record your vital health metrics including blood pressure, glucose levels, and heart rate in a few simple taps.",
+    image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7"
   },
   {
     number: 2,
     title: "Visualize Your Health",
-    description: "See your health trends with beautiful charts and graphs that make understanding your data simple and intuitive."
+    description: "See your health trends with beautiful charts and graphs that make understanding your data simple and intuitive.",
+    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158"
   },
   {
     number: 3,
     title: "Get Smart Insights",
-    description: "Receive personalized health insights and recommendations based on your metrics and health history."
+    description: "Receive personalized health insights and recommendations based on your metrics and health history.",
+    image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef"
   },
   {
     number: 4,
     title: "Share With Your Doctor",
-    description: "Easily share your health metrics and insights with your healthcare provider for better informed care."
+    description: "Easily share your health metrics and insights with your healthcare provider for better informed care.",
+    image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7"
   },
   {
     number: 5,
     title: "Set Health Goals",
-    description: "Set personalized health goals and track your progress with motivating visualizations and achievements."
+    description: "Set personalized health goals and track your progress with motivating visualizations and achievements.",
+    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158"
   }
 ];
 
@@ -78,25 +83,12 @@ export function StepsSection() {
           </div>
           
           <div className="rounded-xl overflow-hidden shadow-lg">
-            <Carousel>
-              <CarouselContent>
-                {[
-                  "https://images.unsplash.com/photo-1649972904349-6e44c42644a7",
-                  "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158",
-                  "https://images.unsplash.com/photo-1576091160550-2173dba999ef"
-                ].map((image, index) => (
-                  <CarouselItem key={index}>
-                    <div className="p-1">
-                      <div className="rounded-xl overflow-hidden">
-                        <img src={image} alt={`Health metrics screenshot ${index + 1}`} className="w-full h-auto" />
-                      </div>
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious />
-              <CarouselNext />
-            </Carousel>
+            <img 
+              src={steps[activeSection].image} 
+              alt={`${steps[activeSection].title} visualization`}
+              className="w-full h-auto object-cover rounded-xl transition-all duration-500"
+              style={{ minHeight: "300px" }}
+            />
           </div>
         </div>
       </div>
