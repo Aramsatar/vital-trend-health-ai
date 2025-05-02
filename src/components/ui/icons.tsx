@@ -12,7 +12,9 @@ import {
   Moon, 
   Sun, 
   LogOut,
-  Menu
+  Menu,
+  Activity,
+  Laptop
 } from "lucide-react"
 
 export const Icons = {
@@ -29,6 +31,8 @@ export const Icons = {
   sun: Sun,
   logOut: LogOut,
   menu: Menu,
+  activity: Activity,
+  laptop: Laptop,
   healthlyLogo: ({ className }: { className?: string }) => (
     <img 
       src="/lovable-uploads/cd438ca8-78ca-443f-92e0-79a6cf85291b.png" 

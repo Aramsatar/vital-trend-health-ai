@@ -17,7 +17,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Icons } from "@/components/ui/icons";
 import { Button } from "@/components/ui/button";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, Activity } from "lucide-react";
 
 // Enhanced realistic data
 const bloodPressureData = [
@@ -144,7 +144,7 @@ export function Trends() {
           <CardHeader className="pb-2">
             <div className="flex items-center justify-between">
               <CardTitle className="text-base font-medium flex items-center gap-2">
-                <Icons.activity className="h-4 w-4 text-primary" />
+                <Activity className="h-4 w-4 text-primary" />
                 Glucose Levels
               </CardTitle>
             </div>

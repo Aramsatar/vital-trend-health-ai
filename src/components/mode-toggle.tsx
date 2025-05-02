@@ -1,5 +1,5 @@
 
-import { Moon, Sun } from "lucide-react";
+import { Moon, Sun, Laptop } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
 import { Button } from "@/components/ui/button";
 import { 
@@ -31,7 +31,7 @@ export function ModeToggle() {
           <span>Dark</span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("system")}>
-          <Icons.laptop className="mr-2 h-4 w-4" />
+          <Laptop className="mr-2 h-4 w-4" />
           <span>System</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
